@@ -2,14 +2,13 @@ package el.ka.dictophone
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import el.ka.dictophone.database.DBHelper
 import el.ka.dictophone.fragments.RecordingFragment
-import el.ka.dictophone.objects.DictaphonePlayer
-import el.ka.dictophone.objects.DictaphoneRecorder
 import el.ka.dictophone.utils.Constants
 import el.ka.dictophone.utils.MAIN_ACTIVITY
 import el.ka.dictophone.utils.changeFragment
+import el.ka.dictophone.utils.db
 
 class MainActivity : AppCompatActivity() {
     private var permissionToRecordAudion = false
@@ -21,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         requestAllPermissions()
 
         MAIN_ACTIVITY = this
+        db = DBHelper(this)
+
         changeFragment(RecordingFragment())
     }
 

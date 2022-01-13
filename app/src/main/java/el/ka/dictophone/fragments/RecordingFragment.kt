@@ -5,9 +5,11 @@ import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import el.ka.dictophone.R
+import el.ka.dictophone.models.Record
 import el.ka.dictophone.objects.DictaphonePlayer
 import el.ka.dictophone.objects.DictaphoneRecorder
 import el.ka.dictophone.utils.MAIN_ACTIVITY
+import el.ka.dictophone.utils.db
 import java.util.*
 
 class RecordingFragment : Fragment(R.layout.fragment_recording) {
@@ -18,15 +20,19 @@ class RecordingFragment : Fragment(R.layout.fragment_recording) {
     private lateinit var dictaphoneRecorder: DictaphoneRecorder
 
     private lateinit var newRecordName: String
+    private lateinit var newRecordPath: String
     private val cachePath = MAIN_ACTIVITY.externalCacheDir!!.absolutePath
 
-    fun getNewRecordName(): String {
+    private fun getNewRecordName(): String {
+        return "${Date().time}"
+    }
+
+    private fun getNewRecordPath(): String {
         return "$cachePath/${Date().time}.3gp"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         initControlDictaphone()
         initButtons(view)
@@ -53,15 +59,25 @@ class RecordingFragment : Fragment(R.layout.fragment_recording) {
     private fun startRecord() {
         if (!dictaphoneRecorder.recording) {
             newRecordName = getNewRecordName()
+            newRecordPath = getNewRecordPath()
+
             btnToggleRecord.text = "Запись..."
-            dictaphoneRecorder.startRecord(newRecordName)
+            dictaphoneRecorder.startRecord(newRecordPath)
         }
     }
 
     private fun stopRecord() {
         if (dictaphoneRecorder.recording) {
-            btnToggleRecord.text = "Начать"
             dictaphoneRecorder.stopRecord()
+            val record = Record(
+                0,
+                newRecordName,
+                newRecordPath,
+                Calendar.getInstance().timeInMillis.toInt(),
+                dictaphonePlayer.getDurationOfFile(newRecordPath)
+            )
+            db.addRecord(record)
+            btnToggleRecord.text = "Начать"
         }
     }
 
