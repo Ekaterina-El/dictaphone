@@ -1,25 +1,23 @@
 package el.ka.dictophone
 
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
-import android.media.MediaRecorder
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import el.ka.dictophone.objects.DictaphonePlayer
+import el.ka.dictophone.objects.DictaphoneRecorder
+import el.ka.dictophone.utils.Constants
 
 class MainActivity : AppCompatActivity() {
-    private var mediaPlayer: MediaPlayer? = null
-    private var recorder: MediaRecorder? = null
+
     private lateinit var btnToggleRecord: Button
     private lateinit var btnTogglePlay: Button
-    private var isRecord = false
-    private var isPlaying = false
+
+    private lateinit var dictaphonePlayer: DictaphonePlayer
+    private lateinit var dictaphoneRecorder: DictaphoneRecorder
 
     private lateinit var fileName: String
 
-    companion object {
-        const val RECORD_AUDIO_PERMISSION = 1
-    }
 
     private var permissionToRecordAudion = false
 
@@ -30,73 +28,50 @@ class MainActivity : AppCompatActivity() {
         requestAllPermissions()
         fileName = "${externalCacheDir!!.absolutePath}/audio.3gp"
 
+        dictaphoneRecorder = DictaphoneRecorder()
+        dictaphonePlayer = DictaphonePlayer()
+
         btnToggleRecord = findViewById(R.id.btnStart)
         btnToggleRecord.setOnClickListener {
             stopPlaying()
-            if (!isRecord) startRecord() else stopRecord()
+            if (!dictaphoneRecorder.recording) startRecord() else stopRecord()
         }
 
         btnTogglePlay = findViewById(R.id.btnTogglePlay)
         btnTogglePlay.setOnClickListener {
-            if (!isRecord) {
-                if (isPlaying) stopPlaying() else startPlaying()
-            }
+            if (dictaphonePlayer.playing) stopPlaying() else startPlaying()
         }
     }
 
     private fun startRecord() {
-        btnToggleRecord.text = "Запись..."
-        recorder = MediaRecorder().apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setOutputFile(fileName)
-            setAudioEncodingBitRate(16 * 44100)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AAC_ELD)
-            prepare()
-            start()
+        if (!dictaphoneRecorder.recording) {
+            btnToggleRecord.text = "Запись..."
+            dictaphoneRecorder.startRecord(fileName)
         }
-        isRecord = true
     }
 
     private fun stopRecord() {
-        btnToggleRecord.text = "Начать"
-        recorder?.apply {
-            stop()
-            release()
+        if (dictaphoneRecorder.recording) {
+            btnToggleRecord.text = "Начать"
+            dictaphoneRecorder.stopRecord()
         }
-        isRecord = false
-        recorder = null
     }
 
     private fun startPlaying() {
-        mediaPlayer = MediaPlayer().apply {
-            setDataSource(fileName)
-            prepare()
-            start()
-            setOnCompletionListener {
-                stopPlaying()
-            }
-        }
-        isPlaying = true
+        dictaphonePlayer.startPlaying(fileName)
         btnTogglePlay.text = "Остановить прослушивание"
     }
 
 
     private fun stopPlaying() {
-        mediaPlayer?.release()
+        dictaphonePlayer.stopPlaying()
         btnTogglePlay.text = "Прослушать"
-        isPlaying = false
-        mediaPlayer = null
     }
 
     private fun requestAllPermissions() {
-        val permissions = arrayOf(
-            android.Manifest.permission.RECORD_AUDIO
-        )
-
         requestPermissions(
-            permissions,
-            RECORD_AUDIO_PERMISSION
+            Constants.permissions,
+            Constants.RECORD_AUDIO_PERMISSION
         )
     }
 
@@ -107,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (requestCode == RECORD_AUDIO_PERMISSION) {
+        if (requestCode == Constants.RECORD_AUDIO_PERMISSION) {
             permissionToRecordAudion = grantResults[0] == PackageManager.PERMISSION_GRANTED
             if (!permissionToRecordAudion) finish()
         }
