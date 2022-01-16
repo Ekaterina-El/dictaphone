@@ -32,9 +32,10 @@ class DictaphonePlayer {
     fun getDurationOfFile(filePath: String): Int {
         val mp = MediaPlayer()
         mp.setDataSource(filePath)
+        mp.prepare()
 
         val r = mp.duration
         mp.release()
-        return r
+        return r/1000
     }
 }

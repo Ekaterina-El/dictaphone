@@ -78,12 +78,13 @@ class RecordingFragment : Fragment(R.layout.fragment_recording) {
     private fun stopRecord() {
         if (dictaphoneRecorder.recording) {
             dictaphoneRecorder.stopRecord()
+            val duration = dictaphonePlayer.getDurationOfFile(newRecordPath)
             val record = Record(
                 0,
                 newRecordName,
                 newRecordPath,
                 Date().time,
-                dictaphonePlayer.getDurationOfFile(newRecordPath)
+                duration
             )
             db.addRecord(record)
             btnToggleRecord.text = "Начать"

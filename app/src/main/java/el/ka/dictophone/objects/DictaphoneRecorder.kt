@@ -7,12 +7,14 @@ class DictaphoneRecorder {
     var recorder: MediaRecorder? = null
 
     fun startRecord(filePath: String) {
+
+
         recorder = MediaRecorder().apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            setAudioSource(MediaRecorder.AudioSource.VOICE_COMMUNICATION)
+            setOutputFormat(MediaRecorder.OutputFormat.AMR_NB)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                    setAudioEncodingBitRate(3000000)
             setOutputFile(filePath)
-            setAudioEncodingBitRate(16 * 44100)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AAC_ELD)
             prepare()
             start()
         }

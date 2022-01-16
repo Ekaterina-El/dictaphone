@@ -42,3 +42,14 @@ fun deleteFile(path: String) {
         file.canonicalFile.delete()
     }
 }
+
+fun durationFormat(timeInSeconds: Int): String {
+    val hours = timeInSeconds / 3600
+    val minutes = (timeInSeconds % 3600) / 60
+    val seconds = timeInSeconds % 60
+
+    return if (hours > 0) {
+        String.format("%02d:%02d:%02d", hours, minutes, seconds)
+    } else String.format("%02d:%02d", minutes, seconds)
+
+}
