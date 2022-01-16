@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import el.ka.dictophone.MainActivity
 import el.ka.dictophone.R
 import el.ka.dictophone.database.DBHelper
+import el.ka.dictophone.fragments.RecordsListFragment
 
 object Constants {
     const val RECORD_AUDIO_PERMISSION = 1
@@ -16,6 +17,7 @@ object Constants {
 
 @SuppressLint("StaticFieldLeak")
 lateinit var MAIN_ACTIVITY: MainActivity
+lateinit var RECORDS_LIST_FRAGMENT: RecordsListFragment
 lateinit var db: DBHelper
 
 fun changeFragment(fragment: Fragment, addToBack: Boolean = true) {

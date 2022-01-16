@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="20dp"
+    android:background="@drawable/dialog_wraper"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/change_record_name"
+        android:textColor="#333"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/dialog_change_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/record_name"
+        android:selectAllOnFocus="true"
+        android:background="@drawable/dialog_input"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/text_color"
+        android:focusedByDefault="true" />
+
+</LinearLayout>

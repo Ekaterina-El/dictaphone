@@ -79,4 +79,59 @@ class DBHelper(
         readableDatabase.close()
         return records
     }
+
+    fun changeName(id: Int, newName: String) {
+        val cv = ContentValues()
+        cv.put(DictaphoneContract.RecordsTable.COL_NAME, newName)
+
+        writableDatabase.update(
+            DictaphoneContract.RecordsTable.TABLE,
+            cv,
+            "${DictaphoneContract.RecordsTable.COL_ID}=?",
+            arrayOf(id.toString())
+        )
+
+        writableDatabase.close()
+    }
+
+    fun getRecordById(id: Int): Record? {
+        val cursor = writableDatabase.query(
+            DictaphoneContract.RecordsTable.TABLE,
+            arrayOf(
+                DictaphoneContract.RecordsTable.COL_ID,
+                DictaphoneContract.RecordsTable.COL_NAME,
+                DictaphoneContract.RecordsTable.COL_FILE_PATH,
+                DictaphoneContract.RecordsTable.COL_CREATE_AT,
+                DictaphoneContract.RecordsTable.COL_DURATION
+            ),
+            "${DictaphoneContract.RecordsTable.COL_ID}=?",
+            arrayOf(
+                id.toString()
+            ),
+            null, null, null, null
+        )
+
+        var record: Record? = null
+
+        if (cursor.moveToFirst()) {
+            val idxId = cursor.getColumnIndex(DictaphoneContract.RecordsTable.COL_ID)
+            val idxName = cursor.getColumnIndex(DictaphoneContract.RecordsTable.COL_NAME)
+            val idxFilePath = cursor.getColumnIndex(DictaphoneContract.RecordsTable.COL_FILE_PATH)
+            val idxCreateAt = cursor.getColumnIndex(DictaphoneContract.RecordsTable.COL_CREATE_AT)
+            val idxDuration = cursor.getColumnIndex(DictaphoneContract.RecordsTable.COL_DURATION)
+
+            record = Record(
+                cursor.getInt(idxId),
+                cursor.getString(idxName),
+                cursor.getString(idxFilePath),
+                cursor.getLong(idxCreateAt),
+                cursor.getInt(idxDuration),
+            )
+
+        }
+
+        cursor.close()
+        readableDatabase.close()
+        return record
+    }
 }

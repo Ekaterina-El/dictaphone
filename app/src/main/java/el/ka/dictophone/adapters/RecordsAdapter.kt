@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class RecordsAdapter(
+    private val onChangeRecordName: (Int) -> Unit,
     private val onItemClickListener: (Record) -> Unit
 ) : RecyclerView.Adapter<RecordsAdapter.ViewHolder>() {
     companion object {
@@ -27,6 +28,10 @@ class RecordsAdapter(
         fun setRecordInfo(record: Record) {
             itemView.setOnClickListener {
                 onItemClickListener(record)
+            }
+            itemView.setOnLongClickListener {
+                onChangeRecordName(record.id)
+                true
             }
 
             tvName.text = record.name
@@ -52,5 +57,10 @@ class RecordsAdapter(
     fun setRecords(records: MutableList<Record>) {
         this.records = records
         notifyDataSetChanged()
+    }
+
+    fun changeDateById(idx: Int, record: Record) {
+        records[idx] = record
+        notifyItemChanged(idx)
     }
 }

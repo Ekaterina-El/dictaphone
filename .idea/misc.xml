@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/JavaApps/Dictophone/app/src/main/res/drawable/dialog_input.xml" value="0.2703125" />
+        <entry key="..\:/JavaApps/Dictophone/app/src/main/res/drawable/dialog_wraper.xml" value="0.2703125" />
         <entry key="..\:/JavaApps/Dictophone/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/JavaApps/Dictophone/app/src/main/res/layout/dialog_change_record_name.xml" value="0.264" />
         <entry key="..\:/JavaApps/Dictophone/app/src/main/res/layout/fragment_recording.xml" value="0.25416666666666665" />
         <entry key="..\:/JavaApps/Dictophone/app/src/main/res/layout/fragment_records_list.xml" value="0.25416666666666665" />
         <entry key="..\:/JavaApps/Dictophone/app/src/main/res/layout/record_item.xml" value="0.4" />

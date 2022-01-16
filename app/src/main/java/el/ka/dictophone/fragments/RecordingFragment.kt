@@ -9,6 +9,7 @@ import el.ka.dictophone.models.Record
 import el.ka.dictophone.objects.DictaphonePlayer
 import el.ka.dictophone.objects.DictaphoneRecorder
 import el.ka.dictophone.utils.MAIN_ACTIVITY
+import el.ka.dictophone.utils.RECORDS_LIST_FRAGMENT
 import el.ka.dictophone.utils.changeFragment
 import el.ka.dictophone.utils.db
 import java.time.LocalDateTime
@@ -60,7 +61,8 @@ class RecordingFragment : Fragment(R.layout.fragment_recording) {
 
         val btnGoToRecords = view.findViewById<Button>(R.id.btnGoToRecords)
         btnGoToRecords.setOnClickListener {
-            changeFragment(RecordsListFragment())
+
+            changeFragment(RECORDS_LIST_FRAGMENT)
         }
     }
 
