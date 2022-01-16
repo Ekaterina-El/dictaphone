@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         MAIN_ACTIVITY = this
         db = DBHelper(this)
 
-        changeFragment(RecordingFragment())
+        changeFragment(RecordingFragment(), false)
     }
 
     private fun requestAllPermissions() {

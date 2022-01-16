@@ -9,6 +9,7 @@ class DictaphonePlayer {
     private var mediaPlayer: MediaPlayer? = null
 
     fun startPlaying(filePath: String) {
+        if (mediaPlayer != null) stopPlaying()
         mediaPlayer = MediaPlayer().apply {
             setDataSource(filePath)
             prepare()

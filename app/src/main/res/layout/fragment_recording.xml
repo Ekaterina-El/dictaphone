@@ -25,4 +25,15 @@
         android:text="Прослушать"
         android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@+id/btnStart" />
+
+    <Button
+        android:id="@+id/btnGoToRecords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF5722"
+        android:text="Все записи"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/btnTogglePlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

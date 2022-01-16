@@ -9,7 +9,10 @@ import el.ka.dictophone.models.Record
 import el.ka.dictophone.objects.DictaphonePlayer
 import el.ka.dictophone.objects.DictaphoneRecorder
 import el.ka.dictophone.utils.MAIN_ACTIVITY
+import el.ka.dictophone.utils.changeFragment
 import el.ka.dictophone.utils.db
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 
 class RecordingFragment : Fragment(R.layout.fragment_recording) {
@@ -54,6 +57,11 @@ class RecordingFragment : Fragment(R.layout.fragment_recording) {
         btnTogglePlay.setOnClickListener {
             if (dictaphonePlayer.playing) stopPlaying() else startPlaying()
         }
+
+        val btnGoToRecords = view.findViewById<Button>(R.id.btnGoToRecords)
+        btnGoToRecords.setOnClickListener {
+            changeFragment(RecordsListFragment())
+        }
     }
 
     private fun startRecord() {
@@ -73,7 +81,7 @@ class RecordingFragment : Fragment(R.layout.fragment_recording) {
                 0,
                 newRecordName,
                 newRecordPath,
-                Calendar.getInstance().timeInMillis.toInt(),
+                LocalDateTime.now().atZone(ZoneOffset.UTC).toEpochSecond().toInt(),
                 dictaphonePlayer.getDurationOfFile(newRecordPath)
             )
             db.addRecord(record)
