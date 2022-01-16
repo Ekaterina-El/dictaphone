@@ -81,7 +81,7 @@ class RecordingFragment : Fragment(R.layout.fragment_recording) {
                 0,
                 newRecordName,
                 newRecordPath,
-                LocalDateTime.now().atZone(ZoneOffset.UTC).toEpochSecond().toInt(),
+                Date().time,
                 dictaphonePlayer.getDurationOfFile(newRecordPath)
             )
             db.addRecord(record)

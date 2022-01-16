@@ -28,8 +28,9 @@ class RecordsAdapter(
             itemView.setOnClickListener {
                 onItemClickListener(record)
             }
+
             tvName.text = record.name
-            tvDate.text = sdf.format(Date(record.createAt.toLong()))
+            tvDate.text = sdf.format(Date(record.createAt))
             tvDuration.text = record.duration.toString()
         }
     }

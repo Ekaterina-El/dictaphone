@@ -19,7 +19,7 @@ class DBHelper(
                 "${DictaphoneContract.RecordsTable.COL_ID} INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "${DictaphoneContract.RecordsTable.COL_NAME} TEXT NOT NULL, " +
                 "${DictaphoneContract.RecordsTable.COL_FILE_PATH} TEXT NOT NULL, " +
-                "${DictaphoneContract.RecordsTable.COL_CREATE_AT} INTEGER NOT NULL, " +
+                "${DictaphoneContract.RecordsTable.COL_CREATE_AT} LONG NOT NULL, " +
                 "${DictaphoneContract.RecordsTable.COL_DURATION} INTEGER NOT NULL)"
         db.execSQL(qr)
     }
@@ -69,7 +69,7 @@ class DBHelper(
                 cursor.getInt(idxId),
                 cursor.getString(idxName),
                 cursor.getString(idxFilePath),
-                cursor.getInt(idxCreateAt),
+                cursor.getLong(idxCreateAt),
                 cursor.getInt(idxDuration),
             )
             records.add(record)
