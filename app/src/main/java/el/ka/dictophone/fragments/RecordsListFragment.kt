@@ -1,10 +1,7 @@
 package el.ka.dictophone.fragments
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import el.ka.dictophone.R
@@ -13,6 +10,7 @@ import el.ka.dictophone.models.Record
 import el.ka.dictophone.objects.DictaphonePlayer
 import el.ka.dictophone.utils.MAIN_ACTIVITY
 import el.ka.dictophone.utils.db
+import el.ka.dictophone.utils.deleteFile
 
 class RecordsListFragment : Fragment(R.layout.fragment_records_list) {
     companion object {
@@ -33,7 +31,13 @@ class RecordsListFragment : Fragment(R.layout.fragment_records_list) {
 
         adapter = RecordsAdapter(
             {id ->
-                MAIN_ACTIVITY.showDialogChangeName(id)}
+                MAIN_ACTIVITY.showDialogChangeName(id)},
+            {id ->
+                deleteFile(db.getRecordById(id)!!.filePath)
+                db.deleteRecordById(id)
+                val idx = getIndexOfRecord(id)!!
+                adapter.deleteRecordById(idx)
+            }
         ) { record ->
             dictaphonePlayer.startPlaying(record.filePath)
         }

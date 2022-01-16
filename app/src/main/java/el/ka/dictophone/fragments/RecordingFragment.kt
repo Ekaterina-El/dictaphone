@@ -61,7 +61,6 @@ class RecordingFragment : Fragment(R.layout.fragment_recording) {
 
         val btnGoToRecords = view.findViewById<Button>(R.id.btnGoToRecords)
         btnGoToRecords.setOnClickListener {
-
             changeFragment(RECORDS_LIST_FRAGMENT)
         }
     }

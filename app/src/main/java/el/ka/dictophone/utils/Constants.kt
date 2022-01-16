@@ -6,6 +6,7 @@ import el.ka.dictophone.MainActivity
 import el.ka.dictophone.R
 import el.ka.dictophone.database.DBHelper
 import el.ka.dictophone.fragments.RecordsListFragment
+import java.io.File
 
 object Constants {
     const val RECORD_AUDIO_PERMISSION = 1
@@ -33,4 +34,11 @@ fun changeFragment(fragment: Fragment, addToBack: Boolean = true) {
     }
 
     fragmentManager.commit()
+}
+
+fun deleteFile(path: String) {
+    val file = File(path)
+    if (file.exists()) {
+        file.canonicalFile.delete()
+    }
 }

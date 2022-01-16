@@ -134,4 +134,15 @@ class DBHelper(
         readableDatabase.close()
         return record
     }
+
+    fun deleteRecordById(id: Int) {
+        writableDatabase.delete(
+            DictaphoneContract.RecordsTable.TABLE,
+            "${DictaphoneContract.RecordsTable.COL_ID}=?",
+            arrayOf(
+                id.toString()
+            )
+        )
+        writableDatabase.close()
+    }
 }
